@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="con" path="C:/Program Files/Java/jdk1.8.0_111/bin"/>
+	<classpathentry kind="con" path="C:/Program Files/Java/jdk1.8.0_111"/>
 	<classpathentry kind="lib" path="lib/commons-beanutils-1.9.3.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections-3.2.2.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections4-4.1.jar"/>
