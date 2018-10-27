@@ -42,13 +42,14 @@ public class CsvFileUpdater implements FileUpdater
 	public void updateFile() throws IOException 
 	{
 		final String fileToUpdate = updateProperties.getFilePath();
-		final FileReader reader = new FileReader(fileToUpdate);
-								
-		final List<String[]> csvBody = retrieveCsvBody(reader);
-		final Writer writer = new FileWriter(fileToUpdate);
 		
-		updateCsvBody(csvBody, writer);
-		reader.close();    		
+		try(final FileReader reader = new FileReader(fileToUpdate))
+		{
+			final List<String[]> csvBody = retrieveCsvBody(reader);			
+			final Writer writer = new FileWriter(fileToUpdate);
+			
+			updateCsvBody(csvBody, writer);
+		}  		
 	}
 	
 	public List<String[]> retrieveCsvBody(final Reader fileToUpdate) throws IOException
@@ -75,16 +76,16 @@ public class CsvFileUpdater implements FileUpdater
 			return;
 		}
 		
-		final int rowToUpdate = updateProperties.getRowNumber();		
-		final String replacementText = updateProperties.getCellReplacementText();
-		
-		csvBody.get(rowToUpdate)[columnIndex] = replacementText;
-		
-		final CSVWriter csvWriter = new CSVWriter(writer);
-    	
-    	csvWriter.writeAll(csvBody);
-    	csvWriter.flush();
-    	csvWriter.close();
+		try(final CSVWriter csvWriter = new CSVWriter(writer))
+		{
+			final int rowToUpdate = updateProperties.getRowNumber();		
+			final String replacementText = updateProperties.getCellReplacementText();
+			
+			csvBody.get(rowToUpdate)[columnIndex] = replacementText;
+			
+			csvWriter.writeAll(csvBody);
+	    	csvWriter.flush();	    	
+		}
 	}
 
 	private int retrieveColumnIndexFromName(final String[] columnNames, final String selectedColumnName)
