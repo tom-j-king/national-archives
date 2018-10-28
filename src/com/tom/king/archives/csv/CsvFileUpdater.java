@@ -29,12 +29,10 @@ public class CsvFileUpdater implements FileUpdater
     {
     	try 
 		{    		
-    		updateFile();
-			System.out.print("File " + updateProperties.getFilePath() + " updated");
+    		updateFile();			
 		} 
 		catch (IOException e) 
 		{			
-			System.out.print("File " + updateProperties.getFilePath() + " was not updated\n");
 			e.printStackTrace();
 		}		
 	}   
@@ -48,18 +46,18 @@ public class CsvFileUpdater implements FileUpdater
 			final List<String[]> csvBody = retrieveCsvBody(reader);			
 			final Writer writer = new FileWriter(fileToUpdate);
 			
-			updateCsvBody(csvBody, writer);
-		}  		
+			updateCsvBody(csvBody, writer);			
+		}
 	}
 	
 	public List<String[]> retrieveCsvBody(final Reader fileToUpdate) throws IOException
 	{		
-		final CSVReader csvReader = new CSVReader(fileToUpdate);		
-		
-		final List<String[]> csvBody = csvReader.readAll();
-		csvReader.close();
-		
-		return csvBody;
+		try(final CSVReader csvReader = new CSVReader(fileToUpdate))
+		{
+			final List<String[]> csvBody = csvReader.readAll();
+			csvReader.close();
+			return csvBody;
+		}
 	}
 	
 	public void updateCsvBody(

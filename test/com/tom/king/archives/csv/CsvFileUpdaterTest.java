@@ -48,7 +48,7 @@ public final class CsvFileUpdaterTest
 	{
 		final Reader reader = new StringReader("filename,origin,metadata,hash\n");
 				
-		final List<String[]> csvBody = fileUpdater.retrieveCsvBody(reader);
+		final List<String[]> csvBody = fileUpdater.retrieveCsvBody(reader);		
 		assertEquals(1, csvBody.size());
 		
 		final String[] row = csvBody.get(0);
@@ -104,6 +104,7 @@ public final class CsvFileUpdaterTest
 		final StringWriter writer = new StringWriter();
 		
 		fileUpdaterUnknownHeader.updateCsvBody(stubbedCsvBody, writer);
+				
 		final String updatedCell = stubbedCsvBody.get(2)[1];
 		
 		assertEquals("Londom", updatedCell);

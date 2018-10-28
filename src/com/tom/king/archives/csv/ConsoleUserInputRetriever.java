@@ -21,22 +21,22 @@ public class ConsoleUserInputRetriever implements UserInputRetriever<CsvUpdatePr
 	private CsvUpdateProperties updateProperties()
 	{
 		final CsvUpdateProperties.Builder updatePropertiesBuilder = CsvUpdateProperties.builder();
-		final PrintStream output = System.out;
-		final Scanner scanner = new Scanner(System.in);
-		
-		output.print("Enter file path of file to update: ");
-		updatePropertiesBuilder.filePath(scanner.nextLine());
-			
-		output.print("Enter row number to update: ");
-		updatePropertiesBuilder.rowNumber(scanner.nextLine());
 				
-		output.print("Enter column name to update: ");
-		updatePropertiesBuilder.columnName(scanner.nextLine());
+		try(final PrintStream output = System.out; 
+				final Scanner scanner = new Scanner(System.in))
+		{
+			output.print("Enter file path of file to update: ");
+			updatePropertiesBuilder.filePath(scanner.nextLine());
 				
-		output.print("Enter replacement cell value: ");
-		updatePropertiesBuilder.cellReplacementText(scanner.nextLine());
+			output.print("Enter row number to update: ");
+			updatePropertiesBuilder.rowNumber(scanner.nextLine());
 					
-		scanner.close();
+			output.print("Enter column name to update: ");
+			updatePropertiesBuilder.columnName(scanner.nextLine());
+					
+			output.print("Enter replacement cell value: ");
+			updatePropertiesBuilder.cellReplacementText(scanner.nextLine());
+		}		
 				
 		return updatePropertiesBuilder.build();
 	}
